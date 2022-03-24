@@ -21,6 +21,7 @@ services:
       DB_NAME: postgres
       DB_SSL_MODE: disable
   db:
+    container_name: postgres
     image: postgres
     restart: unless-stopped
     ports:

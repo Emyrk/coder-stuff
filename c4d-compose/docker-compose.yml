@@ -1,0 +1,27 @@
+version: "3.5"
+services:
+  coder:
+    image: docker.io/codercom/coder:1.29.0
+    container_name: coderd
+    restart: unless-stopped
+    network_mode: host
+    ports:
+      - 7080:7080/tcp
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${HOME}/.coder:/var/run/coder
+    environment:
+      DB_EMBEDDED: ""
+      DB_HOST: "127.0.0.1"
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: "password"
+      DB_NAME: postgres
+      DB_SSL_MODE: disable
+  db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: example
+    volumes: 
+      - ./postgres-data:/var/lib/postgresql/data

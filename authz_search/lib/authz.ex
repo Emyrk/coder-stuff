@@ -90,8 +90,11 @@ defmodule Authz do
           Map.put(
             grps,
             :sum,
-            Enum.reduce(grps, 0, fn {_x, y}, acc ->
-              acc + y
+            Enum.reduce(grps, 0, fn {x, y}, acc ->
+              case x do
+                x when x in [:sum, :product] -> acc
+                _ -> acc + y
+              end
             end)
           )
 
@@ -99,8 +102,11 @@ defmodule Authz do
           Map.put(
             grps,
             :product,
-            Enum.reduce(grps, 1, fn {_x, y}, acc ->
-              acc * y
+            Enum.reduce(grps, 1, fn {x, y}, acc ->
+              case x do
+                x when x in [:sum, :product] -> acc
+                _ -> acc * y
+              end
             end)
           )
 
